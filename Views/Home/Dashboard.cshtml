@@ -1,4 +1,4 @@
-@model Act
+@model List<Act>
 
 <h1>Dojo Activity Center</h1>
 <h4>Welcome, LoggedUser</h4>
@@ -14,7 +14,7 @@
         <th>Actions</th>
     </tr>
     @{
-        foreach(Act a in ViewBag.allActivities)
+        foreach(Act a in Model)
         {
             if(@a.Date > DateTime.Now)
             {

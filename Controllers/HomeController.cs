@@ -59,8 +59,8 @@ namespace csharp_exam.Controllers
                 return View("Index");
             } else {
             ViewBag.userInfo = HttpContext.Session.GetInt32("UserId");
-            ViewBag.allActivities = _context.Activities.Include(b=>b.Participants).ThenInclude(b=>b.Participant).OrderBy(d=>d.Date).ThenBy(d=>d.Time).ToList();
-            return View();
+            List<Act> allActivities = _context.Activities.Include(b=>b.Participants).ThenInclude(b=>b.Participant).OrderBy(d=>d.Date).ThenBy(d=>d.Time).ToList();
+            return View(allActivities);
             }
         }
 
