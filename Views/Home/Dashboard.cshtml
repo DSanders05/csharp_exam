@@ -1,0 +1,46 @@
+@model Act
+
+<h1>Dojo Activity Center</h1>
+<h4>Welcome, LoggedUser</h4>
+<a href="/logout">Logout</a>
+<hr>
+<table class="table table-striped">
+    <tr>
+        <th>Activity</th>
+        <th>Date and Time</th>
+        <th>Duration</th>
+        <th>Event Coordinator</th>
+        <th>No. of Participants</th>
+        <th>Actions</th>
+    </tr>
+    @{
+        foreach(Act a in ViewBag.allActivities)
+        {
+            if(@a.Date > DateTime.Now)
+            {
+                <tr>
+                    <td><a href="/view/activity/@a.ActId">@a.Title</a> </td>
+                    <td>@a.Date.ToShortDateString() at @a.Time.ToShortTimeString()</td>
+                    <td>@a.Duration @a.DurAmount</td>
+                    <td>@a.Creator.FirstName</td>
+                    <td>@a.Participants.Count</td>
+                    @{
+                        if(a.UserId == ViewBag.userInfo)
+                        {
+                            <td><a href="/delete/@a.ActId">Delete</a></td>
+                        }
+                        else if  (a.Participants.Any(r=>r.UserId == @ViewBag.userInfo))
+                        {
+                            <td><a href="/leave/@a.ActId/@ViewBag.UserInfo">Leave</a></td>
+                        }
+                        else
+                        {
+                            <td><a href="/join/@a.ActId/@ViewBag.userInfo">Join</a></td>
+                        }
+                    }
+                </tr>
+            }
+        }
+    }
+</table>
+<a href="/addActivity" class="btn btn-primary">Add New Activity</a>

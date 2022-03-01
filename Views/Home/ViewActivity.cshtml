@@ -1,0 +1,35 @@
+@model Act
+
+<h1>Dojo Activity Center</h1>
+<a href="/logout">Logout</a>
+<a href="/dashboard">Dashboard</a>
+<hr>
+<h3>@ViewBag.actInfo.Title</h3>
+@{
+    if(Model.Participants.Any(r=>r.UserId == @ViewBag.userInfo))
+    {
+        <a href="/leave/@Model.ActId/@ViewBag.userInfo" class="btn btn-primary">Leave</a>
+    } else {
+        <a href="/join/@ViewBag.actInfo.ActId/@ViewBag.userInfo" class="btn btn-primary">Join</a>
+    }
+}
+
+<h5>Event Coordinator: @ViewBag.actInfo.Creator.FirstName @ViewBag.actInfo.Creator.LastName</h5>
+<p>Description: @ViewBag.actInfo.Description</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            <td>Participants</td>
+        </th>
+    </tr>
+    @{
+            foreach(Association u in Model.Participants)
+            {
+                <tr>
+                    <td>
+                        <p>@u.Participant.FirstName</p>
+                    </td>
+                </tr>
+            }
+        }
+</table>
